@@ -21,37 +21,49 @@ import {
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
 import SidebarMenu from '../SidebarMenu/SidebarMenu';
 import ControlClusterPodsTable from '../ControlClusterPodsTable/ControlClusterPodsTable';
-// import LineChartTmp from '../LineChartTmp/LineChartTmp';
+import LineChartTmp from '../LineChartTmp/LineChartTmp';
 // import AreaChartTmp from '../AreaChartTmp/AreaChartTmp';
 
-import httpSevice from '../../httpService';
-
-import MainImage from '../../assets/img/404.svg';
+import MainImage from '../../assets/img/200.svg';
 
 export default () => {
-  const [podListData, setPodListData] = useState([]);
-  const [connectivityDomainList] = useState([]);
+  const [podListData] = useState([
+    {
+      name: 'camera-558f4bc8d9-d5krs',
+      status: 'Running',
+    },
+    {
+      name: 'gateway-78d5d597b4-cvqnj',
+      status: 'Running',
+    },
+    {
+      name: 'gateways-9w4fh',
+      status: 'Running',
+    },
+    {
+      name: 'k8s-apiclient-deployment-84845fb868-7gbsg ',
+      status: 'Running',
+    },
+    {
+      name: 'msm-admission-webhook-69df5cbb77-hnbn9 ',
+      status: 'Running',
+    },
+    {
+      name: 'msm-cni-brgsd',
+      status: 'Running',
+    },
+    {
+      name: 'simple-server-6b9874c556-dl6w7',
+      status: 'Running',
+    },
+  ]);
   const [toggleEffect, setToggleEfffect] = useState(true);
-  const [currentNamespace] = useState('wcm-system');
   const [packetLoss, setPacketLoss] = useState('5%');
 
   useEffect(() => {
-    async function fetchPodsList() {
-      try {
-        const result = await httpSevice.get('api/v1/pods', {
-          params: {
-            ns: currentNamespace,
-          },
-        });
-        setPodListData(result.data.items);
-      } catch (error) {
-        console.log('error :>> ', error);
-      }
-    }
-    fetchPodsList();
     const randomLoss = Math.floor(Math.random() * 10);
     setPacketLoss(`${randomLoss}%`);
-  }, [toggleEffect, currentNamespace]);
+  }, [toggleEffect]);
 
   return (
     <>
@@ -64,7 +76,7 @@ export default () => {
           <EuiPageHeader>
             <EuiPageHeaderSection>
               <EuiTitle>
-                <h1>Control Cluster Overview</h1>
+                <h1>MSM Cluster Overview</h1>
               </EuiTitle>
             </EuiPageHeaderSection>
             <EuiPageHeaderSection>
@@ -78,24 +90,27 @@ export default () => {
             <EuiFlexGroup>
               <EuiFlexItem>
                 <EuiPanel>
-                  <EuiStat
-                    title={connectivityDomainList.length || '1'}
-                    description="Number of UDP Streams"
-                    textAlign="right"
-                    titleColor="secondary"
-                  >
+                  <LineChartTmp />
+                </EuiPanel>
+              </EuiFlexItem>
+              <EuiFlexItem>
+                <EuiPanel className="img-center">
+                  <EuiImage url={MainImage} size="l" alt="WCM" />
+                </EuiPanel>
+              </EuiFlexItem>
+            </EuiFlexGroup>
+            <EuiSpacer />
+            <EuiFlexGroup>
+              <EuiFlexItem>
+                <EuiPanel>
+                  <EuiStat title="1" description="Number of UDP Streams" textAlign="right" titleColor="secondary">
                     <EuiIcon type="check" color="secondary" />
                   </EuiStat>
                 </EuiPanel>
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiPanel>
-                  <EuiStat
-                    title={podListData.length || '1'}
-                    description="Number of TCP Streams"
-                    titleColor="secondary"
-                    textAlign="right"
-                  >
+                  <EuiStat title="1" description="Number of TCP Streams" titleColor="secondary" textAlign="right">
                     <EuiIcon type="check" color="secondary" />
                   </EuiStat>
                 </EuiPanel>

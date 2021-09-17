@@ -1,44 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import ReactJson from 'react-json-view';
 import moment from 'moment';
-import {
-  EuiBasicTable,
-  EuiHealth,
-  EuiIcon,
-  EuiFlyout,
-  EuiFlyoutBody,
-  EuiFlyoutHeader,
-  EuiTitle,
-  EuiText,
-} from '@elastic/eui';
+import { EuiBasicTable, EuiHealth, EuiIcon } from '@elastic/eui';
 
 const ControlClusterPodsTable = ({ components }) => {
-  const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
-  const [flyoutTitle, setFlyOutTitle] = useState('wcm-system');
-  const [flyOutContent, setFlyOutContent] = useState();
-  let flyout;
-  if (isFlyoutVisible) {
-    flyout = (
-      <EuiFlyout ownFocus onClose={() => setIsFlyoutVisible(false)} aria-labelledby="flyoutTitle">
-        <EuiFlyoutHeader hasBorder>
-          <EuiTitle size="m">
-            <h2 id="flyoutTitle">Pod Details</h2>
-          </EuiTitle>
-        </EuiFlyoutHeader>
-        <EuiFlyoutBody>
-          <EuiText>
-            <ReactJson name={flyoutTitle} src={flyOutContent} indentWidth={2} enableClipboard={false} collapsed={2} />
-          </EuiText>
-        </EuiFlyoutBody>
-      </EuiFlyout>
-    );
-  }
-
   const columns = [
     {
-      field: 'status.phase',
-      width: '100px',
+      field: 'status',
+      width: '120px',
       name: 'Status',
       dataType: 'boolean',
       render: (online) => {
@@ -60,28 +29,12 @@ const ControlClusterPodsTable = ({ components }) => {
       },
     },
     {
-      width: '100px',
-      field: 'metadata.namespace',
-      name: 'Namespace',
-    },
-    {
-      field: 'metadata.name',
+      field: 'name',
       name: 'Pod Name',
-    },
-    {
-      field: 'status.podIP',
-      name: 'Pod IP',
-      width: '100px',
-    },
-    {
-      field: 'status.hostIP',
-      name: 'Host IP',
-      width: '100px',
     },
     {
       field: 'status.startTime',
       name: 'Start Time',
-      width: '200px',
       render: (time) => {
         const displayTime = moment(time).format('MMMM Do YYYY, h:mm a');
         return <span>{displayTime}</span>;
@@ -95,9 +48,7 @@ const ControlClusterPodsTable = ({ components }) => {
       'data-test-subj': `row-${id}`,
       className: 'customRowClass',
       onClick: () => {
-        setFlyOutContent(item);
-        setFlyOutTitle(item.metadata.name);
-        setIsFlyoutVisible(true);
+        console.log('object :>> bam');
       },
     };
   };
@@ -121,7 +72,6 @@ const ControlClusterPodsTable = ({ components }) => {
         rowProps={getRowProps}
         cellProps={getCellProps}
       />
-      {flyout}
     </>
   );
 };
