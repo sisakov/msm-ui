@@ -93,10 +93,8 @@ export default () => {
                   <LineChartTmp />
                 </EuiPanel>
               </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiPanel className="img-center">
-                  <EuiImage url={MainImage} size="l" alt="WCM" />
-                </EuiPanel>
+              <EuiFlexItem className="img-center">
+                <EuiImage url={MainImage} size="l" alt="WCM" />
               </EuiFlexItem>
             </EuiFlexGroup>
             <EuiSpacer />

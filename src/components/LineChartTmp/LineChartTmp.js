@@ -3,20 +3,24 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 
 const lineChartData = [
   {
-    name: '05/25',
-    Workloads: 4,
+    name: '11:20',
+    loss: 4,
   },
   {
-    name: '05/26',
-    Workloads: 14,
+    name: '11:30',
+    loss: 14,
   },
   {
-    name: '05/27',
-    Workloads: 24,
+    name: '11:40',
+    loss: 4,
   },
   {
-    name: '05/28',
-    Workloads: 0,
+    name: '11:50',
+    loss: 10,
+  },
+  {
+    name: '12:00',
+    loss: 3,
   },
 ];
 
@@ -37,6 +41,6 @@ export default () => (
     <YAxis />
     <Tooltip />
     <Legend />
-    <Line type="monotone" dataKey="Workloads" stroke="#017d73" activeDot={{ r: 6 }} />
+    <Line type="monotone" dataKey="loss" stroke="#017d73" activeDot={{ r: 6 }} />
   </LineChart>
 );
