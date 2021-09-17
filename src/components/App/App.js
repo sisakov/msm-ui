@@ -11,7 +11,7 @@ import ManageWCMPage from '../ManageWCMPage/ManageWCMPage';
 function App() {
   return (
     <Switch>
-      <Route path="/" component={DashboardPage} exact />
+      <Route path="/" component={LandingPage} exact />
       <Route path="/landing" component={LandingPage} exact />
       <Route path="/dashboard" component={DashboardPage} exact />
       <Route path="/member-clusters-overview" component={MemberClustersOverviewPage} exact />

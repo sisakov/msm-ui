@@ -282,7 +282,7 @@ export default () => {
           }}
           aria-label="Go to home page"
         >
-          Media Service Mesh
+          Media Streaming Mesh
         </EuiHeaderLogo>
         <EuiHeaderSection side="right">
           <EuiHeaderSectionItem>

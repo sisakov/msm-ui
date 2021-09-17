@@ -12,6 +12,7 @@ import {
   EuiSpacer,
   EuiTextColor,
   EuiRange,
+  EuiStat,
   htmlIdGenerator,
 } from '@elastic/eui';
 
@@ -22,7 +23,7 @@ import httpSevice from '../../httpService';
 
 export default () => {
   const [toggleEffect, setToggleEfffect] = useState(true);
-  const [lossValue, setLossValue] = useState('20');
+  const [lossValue, setLossValue] = useState('0');
   const onChange = (e) => {
     setLossValue(e.target.value);
   };
@@ -30,8 +31,13 @@ export default () => {
   useEffect(() => {
     async function fetchConnectivityDamainList() {
       try {
-        const result = await httpSevice.get('/api/v1/cds');
-        console.log('result.data.items) :>> ', result.data.items);
+        const clear = await httpSevice.delete('http://heronab3.miniserver.com:8080/delete');
+        console.log('clear.data :>> ', clear.data);
+        console.log('lossValue :>> ', lossValue);
+        const result = await httpSevice.post('http://heronab3.miniserver.com:8080/add', {
+          percentage: lossValue,
+        });
+        console.log('result.data) :>> ', result.data);
       } catch (error) {
         console.log('error :>> ', error);
       }
@@ -63,7 +69,7 @@ export default () => {
           <EuiPageBody>
             <EuiFlexGroup>
               <EuiFlexItem>
-                <EuiTitle size="xxs">
+                <EuiTitle size="xs">
                   <h3>Set packet loss</h3>
                 </EuiTitle>
 
@@ -81,15 +87,26 @@ export default () => {
                 />
 
                 <EuiSpacer size="xl" />
-              </EuiFlexItem>
-              <EuiFlexItem>
                 <EuiButton iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
                   Apply
                 </EuiButton>
+              </EuiFlexItem>
+              <EuiFlexItem>
+                <EuiTitle size="xs">
+                  <h3>Metrics</h3>
+                </EuiTitle>
                 <EuiSpacer />
-                <EuiButton iconType="broom" onClick={() => setToggleEfffect(!toggleEffect)}>
-                  Clear
-                </EuiButton>
+                <EuiFlexGroup>
+                  <EuiFlexItem>
+                    <EuiStat title={lossValue} description="Packets Loss" titleColor="subdued" />
+                  </EuiFlexItem>
+                  <EuiFlexItem>
+                    <EuiStat title="24" description="IPG Jitter" titleColor="subdued" />
+                  </EuiFlexItem>
+                  <EuiFlexItem>
+                    <EuiStat title="5" description="Out of Sequence (OoS)" titleColor="subdued" />
+                  </EuiFlexItem>
+                </EuiFlexGroup>
               </EuiFlexItem>
             </EuiFlexGroup>
             <EuiSpacer />
@@ -98,9 +115,12 @@ export default () => {
                 <EuiTextColor color="subdued">Demo Streams</EuiTextColor>
               </h2>
             </EuiTitle>
-
+            <EuiSpacer />
             <EuiFlexGroup>
               <EuiFlexItem>
+                <EuiTitle size="xs">
+                  <EuiTextColor>UDP Stream</EuiTextColor>
+                </EuiTitle>
                 <div
                   width="480px"
                   height="360px"
@@ -115,6 +135,9 @@ export default () => {
                 />
               </EuiFlexItem>
               <EuiFlexItem>
+                <EuiTitle size="xs">
+                  <EuiTextColor>TCP Stream</EuiTextColor>
+                </EuiTitle>
                 <div
                   width="480px"
                   height="360px"
