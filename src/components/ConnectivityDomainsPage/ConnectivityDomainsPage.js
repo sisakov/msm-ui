@@ -24,7 +24,8 @@ import SidebarMenu from '../SidebarMenu/SidebarMenu';
 import httpSevice from '../../httpService';
 
 export default () => {
-  const [toggleEffect, setToggleEfffect] = useState(true);
+  const [toggleEffect, setToggleEfffect] = useState(false);
+  const [toggleDelete, setToggleDelete] = useState(false);
   const [lossValue, setLossValue] = useState('0');
   const onChange = (e) => {
     setLossValue(e.target.value);
@@ -33,8 +34,6 @@ export default () => {
   useEffect(() => {
     async function fetchConnectivityDamainList() {
       try {
-        // const clear = await httpSevice.delete('http://heronab3.miniserver.com:8080/delete');
-        // console.log('clear.data :>> ', clear.data);
         console.log('lossValue :>> ', lossValue);
         const result = await httpSevice.post('http://heronab3.miniserver.com:8080/add', {
           percentage: lossValue,
@@ -46,6 +45,18 @@ export default () => {
     }
     fetchConnectivityDamainList();
   }, [toggleEffect]);
+
+  useEffect(() => {
+    async function fetchConnectivityDamainList() {
+      try {
+        const clear = await httpSevice.delete('http://heronab3.miniserver.com:8080/delete');
+        console.log('clear.data :>> ', clear.data);
+      } catch (error) {
+        console.log('error :>> ', error);
+      }
+    }
+    fetchConnectivityDamainList();
+  }, [toggleDelete]);
 
   return (
     <>
@@ -93,7 +104,7 @@ export default () => {
                   <EuiButton iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
                     Apply
                   </EuiButton>
-                  <EuiButtonEmpty iconType="broom" onClick={() => setToggleEfffect(!toggleEffect)}>
+                  <EuiButtonEmpty iconType="broom" onClick={() => setToggleDelete(!toggleDelete)}>
                     clear
                   </EuiButtonEmpty>
                 </EuiPanel>
