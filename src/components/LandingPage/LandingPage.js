@@ -35,19 +35,20 @@ export default () => {
                 </EuiTitle>
                 <EuiSpacer />
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda cupiditate recusandae in dicta iste
-                  aspernatur dolor nam corporis voluptatibus eligendi cum beatae totam ducimus, deleniti ipsam rerum rem
-                  minima placeat?
+                  The only way to deploy real-time applications in Kubernetes today is to use the kube-proxy NAT.
+                  This approach adds extra hops and constrains UDP port selection for externally-sourced traffic (using “NodePorts”),
+                  provides limited visibility and load-balancing granularity, and is unable to support protocols such as SIP and RTSP which negotiate UDP ports dynamically.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum obcaecati, ullam ut dolorum delectus
-                  incidunt voluptate at ratione sequi harum iste quas illo quis doloribus temporibus a accusamus dolorem
-                  amet.
+                  In contrast non-real time applications can make use of load balancers and service meshes to optimize traffic routing
+                  and to enable network observability and data encryption.
+                  Media Streaming Mesh extends these benefits to real-time applications and incorporates capabilities such as stream fan-out and error correction.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat aliquid reiciendis perferendis est
-                  excepturi beatae ipsam facere molestiae. Deleniti mollitia corrupti repudiandae consequatur architecto
-                  labore doloremque cum harum ipsa eveniet!
+                  Media Streaming Mesh core value propositions are:
+                  Extend the benefits of service meshes to real-time applications
+                  Support both interactive applications and streaming media
+                  Enable single cluster, multi-cluster and Internet-scale applications
                 </p>
                 <EuiButton
                   fill
