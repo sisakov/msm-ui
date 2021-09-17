@@ -9,11 +9,13 @@ import {
   EuiPageSideBar,
   EuiTitle,
   EuiButton,
+  EuiButtonEmpty,
   EuiSpacer,
   EuiTextColor,
   EuiRange,
   EuiStat,
   htmlIdGenerator,
+  EuiPanel,
 } from '@elastic/eui';
 
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
@@ -73,40 +75,47 @@ export default () => {
                   <h3>Set packet loss</h3>
                 </EuiTitle>
 
-                <EuiSpacer />
+                <EuiSpacer size="s" />
 
-                <EuiRange
-                  id={htmlIdGenerator()()}
-                  value={lossValue}
-                  onChange={onChange}
-                  showRange
-                  showTicks
-                  fullWidth
-                  tickInterval={10}
-                  aria-label="An example of EuiRange with custom tickInterval"
-                />
+                <EuiPanel>
+                  <EuiRange
+                    id={htmlIdGenerator()()}
+                    value={lossValue}
+                    onChange={onChange}
+                    showRange
+                    showTicks
+                    fullWidth
+                    tickInterval={10}
+                    aria-label="An example of EuiRange with custom tickInterval"
+                  />
 
-                <EuiSpacer size="xl" />
-                <EuiButton iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
-                  Apply
-                </EuiButton>
+                  <EuiSpacer size="m" />
+                  <EuiButton iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
+                    Apply
+                  </EuiButton>
+                  <EuiButtonEmpty iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
+                    clear
+                  </EuiButtonEmpty>
+                </EuiPanel>
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiTitle size="xs">
                   <h3>Metrics</h3>
                 </EuiTitle>
-                <EuiSpacer />
-                <EuiFlexGroup>
-                  <EuiFlexItem>
-                    <EuiStat title={lossValue} description="Packets Loss" titleColor="subdued" />
-                  </EuiFlexItem>
-                  <EuiFlexItem>
-                    <EuiStat title="24" description="IPG Jitter" titleColor="subdued" />
-                  </EuiFlexItem>
-                  <EuiFlexItem>
-                    <EuiStat title="5" description="Out of Sequence (OoS)" titleColor="subdued" />
-                  </EuiFlexItem>
-                </EuiFlexGroup>
+                <EuiSpacer size="s" />
+                <EuiPanel>
+                  <EuiFlexGroup>
+                    <EuiFlexItem>
+                      <EuiStat title={lossValue} description="Packets Loss" titleColor="primary" />
+                    </EuiFlexItem>
+                    <EuiFlexItem>
+                      <EuiStat title="24" description="IPG Jitter" titleColor="primary" />
+                    </EuiFlexItem>
+                    <EuiFlexItem>
+                      <EuiStat title="5" description="Out of Sequence (OoS)" titleColor="primary" />
+                    </EuiFlexItem>
+                  </EuiFlexGroup>
+                </EuiPanel>
               </EuiFlexItem>
             </EuiFlexGroup>
             <EuiSpacer />
@@ -127,9 +136,7 @@ export default () => {
                   className="vxgplayer"
                   id="vxg_media_player1"
                   url="rtsp://heronab3.miniserver.com:8554/camera"
-                  autostart
                   controls
-                  avsync
                   nmf-src="/assets/pnacl/Release/media_player.nmf"
                   nmf-path="media_player.nmf"
                 />
@@ -144,9 +151,7 @@ export default () => {
                   className="vxgplayer"
                   id="vxg_media_player2"
                   url="rtsp://heronab3.miniserver.com:30554/camera"
-                  autostart
                   controls
-                  avsync
                   nmf-src="/assets/pnacl/Release/media_player.nmf"
                   nmf-path="media_player.nmf"
                 />
