@@ -33,8 +33,8 @@ export default () => {
   useEffect(() => {
     async function fetchConnectivityDamainList() {
       try {
-        const clear = await httpSevice.delete('http://heronab3.miniserver.com:8080/delete');
-        console.log('clear.data :>> ', clear.data);
+        // const clear = await httpSevice.delete('http://heronab3.miniserver.com:8080/delete');
+        // console.log('clear.data :>> ', clear.data);
         console.log('lossValue :>> ', lossValue);
         const result = await httpSevice.post('http://heronab3.miniserver.com:8080/add', {
           percentage: lossValue,
@@ -93,7 +93,7 @@ export default () => {
                   <EuiButton iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
                     Apply
                   </EuiButton>
-                  <EuiButtonEmpty iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
+                  <EuiButtonEmpty iconType="broom" onClick={() => setToggleEfffect(!toggleEffect)}>
                     clear
                   </EuiButtonEmpty>
                 </EuiPanel>
@@ -131,8 +131,8 @@ export default () => {
                   <EuiTextColor>UDP Stream</EuiTextColor>
                 </EuiTitle>
                 <div
-                  width="480px"
-                  height="360px"
+                  width="620px"
+                  height="480px"
                   className="vxgplayer"
                   id="vxg_media_player1"
                   url="rtsp://heronab3.miniserver.com:8554/camera"
@@ -146,8 +146,8 @@ export default () => {
                   <EuiTextColor>TCP Stream</EuiTextColor>
                 </EuiTitle>
                 <div
-                  width="480px"
-                  height="360px"
+                  width="620px"
+                  height="480px"
                   className="vxgplayer"
                   id="vxg_media_player2"
                   url="rtsp://heronab3.miniserver.com:30554/camera"
