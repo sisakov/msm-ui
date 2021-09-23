@@ -61,7 +61,7 @@ export default () => {
   ];
   const [selectedCluster, setSelectedCluster] = useState([options[0]]);
   const [toggleEffect, setToggleEfffect] = useState(true);
-  const [connectToCluster, setConnectToCluster] = useState(true);
+  const [connectToCluster, setConnectToCluster] = useState(false);
 
   const onClusterChange = (selectedOptions) => {
     // We should only get back either 0 or 1 options.
