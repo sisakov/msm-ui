@@ -9,7 +9,6 @@ import {
   EuiPageSideBar,
   EuiTitle,
   EuiButton,
-  EuiButtonEmpty,
   EuiSpacer,
   EuiTextColor,
   EuiRange,
@@ -101,12 +100,18 @@ export default () => {
                   />
 
                   <EuiSpacer size="m" />
-                  <EuiButton iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
-                    Apply
-                  </EuiButton>
-                  <EuiButtonEmpty iconType="broom" onClick={() => setToggleDelete(!toggleDelete)}>
-                    clear
-                  </EuiButtonEmpty>
+                  <EuiFlexGroup>
+                    <EuiFlexItem>
+                      <EuiButton fill iconType="play" onClick={() => setToggleEfffect(!toggleEffect)}>
+                        Apply
+                      </EuiButton>
+                    </EuiFlexItem>
+                    <EuiFlexItem>
+                      <EuiButton color="danger" iconType="broom" onClick={() => setToggleDelete(!toggleDelete)}>
+                        Сlear
+                      </EuiButton>
+                    </EuiFlexItem>
+                  </EuiFlexGroup>
                 </EuiPanel>
               </EuiFlexItem>
               <EuiFlexItem>

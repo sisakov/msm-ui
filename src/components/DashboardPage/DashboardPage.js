@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   EuiFlexItem,
   EuiFlexGroup,
@@ -10,12 +10,11 @@ import {
   EuiPanel,
   EuiTitle,
   EuiText,
-  EuiStat,
-  EuiIcon,
   EuiButton,
   EuiSpacer,
   EuiImage,
-  EuiLoadingContent,
+  EuiComboBox,
+  EuiFormRow,
 } from '@elastic/eui';
 
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
@@ -25,9 +24,10 @@ import LineChartTmp from '../LineChartTmp/LineChartTmp';
 // import AreaChartTmp from '../AreaChartTmp/AreaChartTmp';
 
 import MainImage from '../../assets/img/200.svg';
+import NoFoundImage from '../../assets/img/404.svg';
 
 export default () => {
-  const [podListData] = useState([
+  const [podListData, setPodListData] = useState([
     {
       name: 'camera-558f4bc8d9-d5krs',
       status: 'Running',
@@ -44,26 +44,64 @@ export default () => {
       name: 'k8s-apiclient-deployment-84845fb868-7gbsg ',
       status: 'Running',
     },
-    {
-      name: 'msm-admission-webhook-69df5cbb77-hnbn9 ',
-      status: 'Running',
-    },
-    {
-      name: 'msm-cni-brgsd',
-      status: 'Running',
-    },
-    {
-      name: 'simple-server-6b9874c556-dl6w7',
-      status: 'Running',
-    },
   ]);
+  const options = [
+    {
+      label: 'cisco-east-2',
+    },
+    {
+      label: 'cisco-west-1',
+    },
+    {
+      label: 'aws-k8s-1',
+    },
+    {
+      label: 'cisco-east-3',
+    },
+  ];
+  const [selectedCluster, setSelectedCluster] = useState([options[0]]);
   const [toggleEffect, setToggleEfffect] = useState(true);
-  const [packetLoss, setPacketLoss] = useState('5%');
+  const [connectToCluster, setConnectToCluster] = useState(true);
 
-  useEffect(() => {
-    const randomLoss = Math.floor(Math.random() * 10);
-    setPacketLoss(`${randomLoss}%`);
-  }, [toggleEffect]);
+  const onClusterChange = (selectedOptions) => {
+    // We should only get back either 0 or 1 options.
+    setSelectedCluster(selectedOptions);
+  };
+  const connectToSelectedCluster = () => {
+    setConnectToCluster(!connectToCluster);
+  };
+  const addMSMPods = () => {
+    setPodListData([
+      {
+        name: 'camera-558f4bc8d9-d5krs',
+        status: 'Running',
+      },
+      {
+        name: 'gateway-78d5d597b4-cvqnj',
+        status: 'Running',
+      },
+      {
+        name: 'gateways-9w4fh',
+        status: 'Running',
+      },
+      {
+        name: 'k8s-apiclient-deployment-84845fb868-7gbsg ',
+        status: 'Running',
+      },
+      {
+        name: 'msm-admission-webhook-69df5cbb77-hnbn9 ',
+        status: 'Running',
+      },
+      {
+        name: 'msm-cni-brgsd',
+        status: 'Running',
+      },
+      {
+        name: 'simple-server-6b9874c556-dl6w7',
+        status: 'Running',
+      },
+    ]);
+  };
 
   return (
     <>
@@ -87,71 +125,74 @@ export default () => {
           </EuiPageHeader>
           <EuiPageBody>
             <EuiSpacer />
-            <EuiFlexGroup>
-              <EuiFlexItem>
+            {!connectToCluster ? (
+              <>
+                <EuiFlexItem className="img-center">
+                  <EuiImage url={NoFoundImage} size="m" alt="WCM" />
+                </EuiFlexItem>
+                <EuiSpacer />
                 <EuiPanel>
-                  <LineChartTmp />
-                </EuiPanel>
-              </EuiFlexItem>
-              <EuiFlexItem className="img-center">
-                <EuiImage url={MainImage} size="l" alt="WCM" />
-              </EuiFlexItem>
-            </EuiFlexGroup>
-            <EuiSpacer />
-            <EuiFlexGroup>
-              <EuiFlexItem>
-                <EuiPanel>
-                  <EuiStat title="1" description="Number of UDP Streams" textAlign="right" titleColor="secondary">
-                    <EuiIcon type="check" color="secondary" />
-                  </EuiStat>
-                </EuiPanel>
-              </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiPanel>
-                  <EuiStat title="1" description="Number of TCP Streams" titleColor="secondary" textAlign="right">
-                    <EuiIcon type="check" color="secondary" />
-                  </EuiStat>
-                </EuiPanel>
-              </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiPanel>
-                  <EuiStat title={packetLoss} description="Packet loss" titleColor="secondary" textAlign="right">
-                    <EuiIcon type="check" color="secondary" />
-                  </EuiStat>
-                </EuiPanel>
-              </EuiFlexItem>
-            </EuiFlexGroup>
-            <EuiSpacer />
-            <EuiTitle>
-              <h3>MSM Pods</h3>
-            </EuiTitle>
-            <EuiPanel>
-              {!podListData.length ? (
-                <>
-                  <EuiFlexItem className="img-center">
-                    <EuiImage url={MainImage} size="m" alt="WCM" />
-                  </EuiFlexItem>
-                  <EuiSpacer />
-                  <EuiTitle>
-                    <h4>No Pods found</h4>
+                  <EuiTitle size="s">
+                    <h4>No Cluster Connections Found</h4>
                   </EuiTitle>
                   <EuiText>
-                    <p>
-                      Something went wrong or we couldn&apos;t find Pods on your cluster. You can check our
-                      documentation for additional help.
-                      <br />
-                      Our team is working hard to provide you the best user experience. If you have ideas on how to
-                      improve our Dashboard, don&apos;t hesitate to contact our team.
-                    </p>
+                    <p>Select cluster to connect from the dropdown below, or add new cluster.</p>
                   </EuiText>
                   <EuiSpacer />
-                  <EuiLoadingContent lines={2} />
-                </>
-              ) : (
-                <PodsTable components={podListData} />
-              )}
-            </EuiPanel>
-            <EuiSpacer />
+                  <EuiFormRow
+                    label="Your cluster"
+                    helpText="Select a cluster from the list. If your cluster isn’t listed, create a custom one."
+                  >
+                    <EuiComboBox
+                      placeholder="Select a single cluster"
+                      singleSelection={{ asPlainText: true }}
+                      options={options}
+                      selectedOptions={selectedCluster}
+                      onChange={onClusterChange}
+                      customOptionText="Add {searchValue} as your occupation"
+                    />
+                  </EuiFormRow>
+                  <EuiSpacer />
+                  <EuiFlexGroup>
+                    <EuiFlexItem>
+                      <EuiButton fill iconType="push" onClick={() => connectToSelectedCluster()}>
+                        Connect
+                      </EuiButton>
+                    </EuiFlexItem>
+                    <EuiFlexItem>
+                      <EuiButton iconType="indexSettings" onClick={() => setToggleEfffect(!toggleEffect)}>
+                        Add New Cluster
+                      </EuiButton>
+                    </EuiFlexItem>
+                  </EuiFlexGroup>
+                </EuiPanel>
+              </>
+            ) : (
+              <>
+                <EuiFlexGroup>
+                  <EuiFlexItem>
+                    <EuiPanel>
+                      <LineChartTmp />
+                    </EuiPanel>
+                  </EuiFlexItem>
+                  <EuiFlexItem className="img-center">
+                    <EuiImage url={MainImage} size="l" alt="WCM" />
+                  </EuiFlexItem>
+                </EuiFlexGroup>
+                <EuiSpacer />
+                <EuiTitle>
+                  <h3>MSM Pods</h3>
+                </EuiTitle>
+                <EuiSpacer />
+                <EuiPanel>
+                  <EuiButton fill iconType="indexSettings" onClick={() => addMSMPods()}>
+                    Install MSM Pods
+                  </EuiButton>
+                  <EuiSpacer />
+                  <PodsTable components={podListData} />
+                </EuiPanel>
+              </>
+            )}
           </EuiPageBody>
         </EuiPageBody>
       </EuiPage>
