@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { EuiBasicTable, EuiHealth, EuiIcon } from '@elastic/eui';
 
-const ControlClusterPodsTable = ({ components }) => {
+const PodsTable = ({ components }) => {
   const columns = [
     {
       field: 'status',
@@ -47,9 +47,6 @@ const ControlClusterPodsTable = ({ components }) => {
     return {
       'data-test-subj': `row-${id}`,
       className: 'customRowClass',
-      onClick: () => {
-        console.log('object :>> bam');
-      },
     };
   };
 
@@ -76,6 +73,6 @@ const ControlClusterPodsTable = ({ components }) => {
   );
 };
 
-ControlClusterPodsTable.propTypes = { components: PropTypes.arrayOf(PropTypes.object).isRequired };
+PodsTable.propTypes = { components: PropTypes.arrayOf(PropTypes.object).isRequired };
 
-export default ControlClusterPodsTable;
+export default PodsTable;

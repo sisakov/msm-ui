@@ -32,9 +32,8 @@ export default () => {
   };
 
   useEffect(() => {
-    async function fetchConnectivityDamainList() {
+    async function postLossValue() {
       try {
-        console.log('lossValue :>> ', lossValue);
         const result = await httpSevice.post('http://heronab3.miniserver.com:8080/add', {
           percentage: lossValue,
         });
@@ -43,11 +42,12 @@ export default () => {
         console.log('error :>> ', error);
       }
     }
-    fetchConnectivityDamainList();
+    postLossValue();
   }, [toggleEffect]);
 
   useEffect(() => {
-    async function fetchConnectivityDamainList() {
+    setLossValue('0');
+    async function clearLoss() {
       try {
         const clear = await httpSevice.delete('http://heronab3.miniserver.com:8080/delete');
         console.log('clear.data :>> ', clear.data);
@@ -55,7 +55,7 @@ export default () => {
         console.log('error :>> ', error);
       }
     }
-    fetchConnectivityDamainList();
+    clearLoss();
   }, [toggleDelete]);
 
   return (
@@ -139,26 +139,9 @@ export default () => {
             <EuiFlexGroup>
               <EuiFlexItem>
                 <EuiTitle size="xs">
-                  <EuiTextColor>UDP Stream</EuiTextColor>
-                </EuiTitle>
-                <div
-                  width="620px"
-                  height="480px"
-                  className="vxgplayer"
-                  id="vxg_media_player1"
-                  url="rtsp://heronab3.miniserver.com:8554/camera"
-                  controls
-                  nmf-src="/assets/pnacl/Release/media_player.nmf"
-                  nmf-path="media_player.nmf"
-                />
-              </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiTitle size="xs">
                   <EuiTextColor>TCP Stream</EuiTextColor>
                 </EuiTitle>
                 <div
-                  width="620px"
-                  height="480px"
                   className="vxgplayer"
                   id="vxg_media_player2"
                   url="rtsp://heronab3.miniserver.com:30554/camera"

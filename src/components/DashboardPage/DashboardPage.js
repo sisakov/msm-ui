@@ -20,7 +20,7 @@ import {
 
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
 import SidebarMenu from '../SidebarMenu/SidebarMenu';
-import ControlClusterPodsTable from '../ControlClusterPodsTable/ControlClusterPodsTable';
+import PodsTable from '../PodsTable/PodsTable';
 import LineChartTmp from '../LineChartTmp/LineChartTmp';
 // import AreaChartTmp from '../AreaChartTmp/AreaChartTmp';
 
@@ -148,7 +148,7 @@ export default () => {
                   <EuiLoadingContent lines={2} />
                 </>
               ) : (
-                <ControlClusterPodsTable components={podListData} />
+                <PodsTable components={podListData} />
               )}
             </EuiPanel>
             <EuiSpacer />
