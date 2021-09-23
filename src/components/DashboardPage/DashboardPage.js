@@ -15,36 +15,113 @@ import {
   EuiImage,
   EuiComboBox,
   EuiFormRow,
+  EuiToolTip,
 } from '@elastic/eui';
 
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
 import SidebarMenu from '../SidebarMenu/SidebarMenu';
 import PodsTable from '../PodsTable/PodsTable';
-import LineChartTmp from '../LineChartTmp/LineChartTmp';
 // import AreaChartTmp from '../AreaChartTmp/AreaChartTmp';
 
 import MainImage from '../../assets/img/200.svg';
 import NoFoundImage from '../../assets/img/404.svg';
 
 export default () => {
-  const [podListData, setPodListData] = useState([
+  const defaultResurces = [
     {
       name: 'camera-558f4bc8d9-d5krs',
       status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'camera',
+      status: 'Running',
+      type: 'Service',
     },
     {
       name: 'gateway-78d5d597b4-cvqnj',
       status: 'Running',
+      type: 'Pod',
     },
     {
       name: 'gateways-9w4fh',
       status: 'Running',
+      type: 'Pod',
     },
     {
       name: 'k8s-apiclient-deployment-84845fb868-7gbsg ',
       status: 'Running',
+      type: 'Pod',
     },
-  ]);
+    {
+      name: 'kubernetes',
+      status: 'Running',
+      type: 'Service',
+    },
+  ];
+  const msmInstalledResurces = [
+    {
+      name: 'camera-558f4bc8d9-d5krs',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'camera',
+      status: 'Running',
+      type: 'Service',
+    },
+    {
+      name: 'gateway-78d5d597b4-cvqnj',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'gateways-9w4fh',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'k8s-apiclient-deployment-84845fb868-7gbsg',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'kubernetes',
+      status: 'Running',
+      type: 'Service',
+    },
+    {
+      name: 'msm-admission-webhook-69df5cbb77-hnbn9',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'msm-cni-brgsd',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'simple-server-6b9874c556-dl6w7',
+      status: 'Running',
+      type: 'Pod',
+    },
+    {
+      name: 'gateway-service',
+      status: 'Running',
+      type: 'Service',
+    },
+    {
+      name: 'k8s-apiclient-service',
+      status: 'Running',
+      type: 'Service',
+    },
+    {
+      name: 'msm-admission-webhook-svc',
+      status: 'Running',
+      type: 'Service',
+    },
+  ];
+  const [podListData, setPodListData] = useState(defaultResurces);
   const options = [
     {
       label: 'cisco-east-2',
@@ -62,7 +139,7 @@ export default () => {
   const [selectedCluster, setSelectedCluster] = useState([options[0]]);
   const [toggleEffect, setToggleEfffect] = useState(true);
   const [connectToCluster, setConnectToCluster] = useState(false);
-
+  const [installToggle, setInstallToggle] = useState(true);
   const onClusterChange = (selectedOptions) => {
     // We should only get back either 0 or 1 options.
     setSelectedCluster(selectedOptions);
@@ -70,37 +147,13 @@ export default () => {
   const connectToSelectedCluster = () => {
     setConnectToCluster(!connectToCluster);
   };
-  const addMSMPods = () => {
-    setPodListData([
-      {
-        name: 'camera-558f4bc8d9-d5krs',
-        status: 'Running',
-      },
-      {
-        name: 'gateway-78d5d597b4-cvqnj',
-        status: 'Running',
-      },
-      {
-        name: 'gateways-9w4fh',
-        status: 'Running',
-      },
-      {
-        name: 'k8s-apiclient-deployment-84845fb868-7gbsg ',
-        status: 'Running',
-      },
-      {
-        name: 'msm-admission-webhook-69df5cbb77-hnbn9 ',
-        status: 'Running',
-      },
-      {
-        name: 'msm-cni-brgsd',
-        status: 'Running',
-      },
-      {
-        name: 'simple-server-6b9874c556-dl6w7',
-        status: 'Running',
-      },
-    ]);
+  const addMSM = () => {
+    setInstallToggle(false);
+    setPodListData(msmInstalledResurces);
+  };
+  const removeMSM = () => {
+    setInstallToggle(true);
+    setPodListData(defaultResurces);
   };
 
   return (
@@ -114,13 +167,8 @@ export default () => {
           <EuiPageHeader>
             <EuiPageHeaderSection>
               <EuiTitle>
-                <h1>MSM Cluster Overview</h1>
+                <h1>MSM Overview</h1>
               </EuiTitle>
-            </EuiPageHeaderSection>
-            <EuiPageHeaderSection>
-              <EuiButton iconType="refresh" onClick={() => setToggleEfffect(!toggleEffect)}>
-                Refresh
-              </EuiButton>
             </EuiPageHeaderSection>
           </EuiPageHeader>
           <EuiPageBody>
@@ -160,9 +208,11 @@ export default () => {
                       </EuiButton>
                     </EuiFlexItem>
                     <EuiFlexItem>
-                      <EuiButton iconType="indexSettings" onClick={() => setToggleEfffect(!toggleEffect)}>
-                        Add New Cluster
-                      </EuiButton>
+                      <EuiToolTip position="top" content={<p>Work in progress!</p>}>
+                        <EuiButton fullWidth iconType="indexSettings" onClick={() => setToggleEfffect(!toggleEffect)}>
+                          Add New Cluster
+                        </EuiButton>
+                      </EuiToolTip>
                     </EuiFlexItem>
                   </EuiFlexGroup>
                 </EuiPanel>
@@ -170,24 +220,29 @@ export default () => {
             ) : (
               <>
                 <EuiFlexGroup>
-                  <EuiFlexItem>
-                    <EuiPanel>
-                      <LineChartTmp />
-                    </EuiPanel>
-                  </EuiFlexItem>
                   <EuiFlexItem className="img-center">
-                    <EuiImage url={MainImage} size="l" alt="WCM" />
+                    <EuiImage url={MainImage} size="xxs" alt="WCM" />
                   </EuiFlexItem>
                 </EuiFlexGroup>
                 <EuiSpacer />
                 <EuiTitle>
-                  <h3>MSM Pods</h3>
+                  <h3>MSM Resources</h3>
                 </EuiTitle>
                 <EuiSpacer />
+                <EuiFlexGroup>
+                  <EuiFlexItem>
+                    <EuiButton fill disabled={!installToggle} iconType="indexSettings" onClick={() => addMSM()}>
+                      Install MSM
+                    </EuiButton>
+                  </EuiFlexItem>
+                  <EuiFlexItem>
+                    <EuiButton disabled={installToggle} color="danger" iconType="cross" onClick={() => removeMSM()}>
+                      Uninstall MSM
+                    </EuiButton>
+                  </EuiFlexItem>
+                </EuiFlexGroup>
+                <EuiSpacer />
                 <EuiPanel>
-                  <EuiButton fill iconType="indexSettings" onClick={() => addMSMPods()}>
-                    Install MSM Pods
-                  </EuiButton>
                   <EuiSpacer />
                   <PodsTable components={podListData} />
                 </EuiPanel>

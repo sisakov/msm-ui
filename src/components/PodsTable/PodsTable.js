@@ -29,6 +29,11 @@ const PodsTable = ({ components }) => {
       },
     },
     {
+      field: 'type',
+      name: 'Type',
+      width: '80px',
+    },
+    {
       field: 'name',
       name: 'Pod Name',
     },
